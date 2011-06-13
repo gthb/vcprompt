@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vcprompt</title>
+    <style type="text/css">
+        html{color:black;background:white;}
+        body{font: normal normal normal 14px/17px consolas, monospace;padding:30px 50px;width:600px;}
+        h1{font-size:18px;}
+        h1,h2{font-weight:bold;margin-left:-20px;}
+        h2{margin-top:60px;}
+        p{margin:2em 0;}
+        a:link,a:visited{color:black;}
+        a:hover,a:active,a:focus{color:#f60;}
+        ul{margin:3em 0 0 -1em;}
+        ul li{line-height:2em;list-style-type: none;}
+        ul li:before{content:"* ";}
+        pre,code{font:inherit;line-height:1.5em;}
+        pre{background:#edeceb;border-left:5px solid #dcdcdc;color:#333231;margin:1em 0;overflow:auto;padding:1em;}
+    </style>
+</head>
+<body>
+    <h1>VCPROMPT</h1>
+    <p>version control info in your prompt. see the <a href="https://github.com/xvzf/vcprompt">source</a>.</p>
+    
+    <h2>INSTALL</h2>
+<pre><code>$ curl -sL https://github.com/xvzf/vcprompt/raw/master/bin/vcprompt > ~/bin/vcprompt 
+$ chmod +x ~/bin/vcprompt
+$ export PS1="[$(vcprompt)] $PS1"
+</code></pre>
+
+    <h2>EXAMPLES</h2>
+<pre><code># the default output is '&lt;system&gt;:&lt;branch&gt;'
+[djl@titan ~/myproject]$ vcprompt
+git:master
+
+# show only the hash instead of the branch
+[djl@titan ~/myproject]$ vcprompt -f '%s:%h'
+git:bc3c3fb
+
+# what VCSs does vcprompt support?
+[djl@titan ~/myprojects]$ vcprompt --systems
+</code></pre>
+</body>
+</html>
