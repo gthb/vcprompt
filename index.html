@@ -30,16 +30,28 @@ $ export PS1="[$(vcprompt)] $PS1"
 </code></pre>
 
     <h2>EXAMPLES</h2>
-<pre><code># the default output is '&lt;system&gt;:&lt;branch&gt;'
-[djl@titan ~/myproject]$ vcprompt
+    <p>what systems are supported?</p>
+<pre><code>$ vcprompt --systems
+bzr
+darcs
+fossil
+git
+hg
+svn
+</code></pre>
+
+    <p>the default output is '&lt;system&gt;:&lt;branch&gt;'</p>
+<pre><code>$ vcprompt
 git:master
+</code></pre>
 
-# show only the hash instead of the branch
-[djl@titan ~/myproject]$ vcprompt -f '%s:%h'
+<p>show only the hash instead of the branch</p>
+<pre><code>$ vcprompt -f '%s:%h'
 git:bc3c3fb
+</code></pre>
 
-# what's that over there!?
-[djl@titan ~/myproject]$ vcprompt --path ~/anotherproject
+<p><code>-p/--path</code> can be use to specifiy a path to run vcprompt</p>
+<pre><code>$ vcprompt --path ~/anotherproject
 hg:default
 </code></pre>
 </body>
