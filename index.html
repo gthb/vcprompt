@@ -2,144 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vcprompt</title>
-    <style type="text/css">
-        html{color:black;background:white;}
-        body{font: 11px/17px Verdana, Helvetica, Arial, sans-serif;padding:30px 50px;width:450px;}
-        h1{font-size:18px;}
-        h1,h2{font-weight:bold;margin-left:-20px;}
-        h2{font-size:16px;margin-top:60px;}
-        p{margin:2em 0;}
-        a:link,a:visited{color:black;}
-        a:hover,a:active,a:focus{color:#f60;}
-        ul{margin:3em 0 0 -1em;}
-        ul li{line-height:2em;margin-bottom:20px;}
-        ul li p{margin:0;}
-        pre,code{background:#f0f0f0;font:12px 'andale mono','lucida console',monospace;line-height:1.5em;padding:3px;}
-        pre{background:#f0f0f0;border:1px solid #dcdcdc;-moz-border-radius:5px;border-radius:5px;margin:1em 0;overflow:auto;padding:1em;}
+    <title>vcprompt(1)</title>
+    <style>
+    body{font-family:monospace;}
     </style>
 </head>
 <body>
-<h1>vcprompt</h1>
+<h1>VCPROMPT(1)</h1>
 
-<p>Version control information in your prompt. See the <a href="https://github.com/djl/vcprompt">source</a>.</p>
+<h2>NAME</h2>
+<pre>
+    vcprompt - Version control information in your prompt
+</pre>
+
+<h2>SYNOPSIS</h2>
+<pre>
+    vcprompt [ OPTIONS ]
+    vcprompt --format FORMAT
+    vcprompt --format-SYSTEM FORMAT
+    vcprompt --path PATH
+    vcprompt --unknown UNKNOWN
+    vcprompt --systems
+    vcprompt --version
+    vcprompt --help
+</pre>
+
+<h2>DESCRIPTION</h2>
+<pre>
+    vcprompt is a small utility for displaying version control information in your shell's prompt.
+</pre>
 
 <h2>INSTALL</h2>
+<pre>
+    $ curl -sL https://github.com/djl/vcprompt/raw/master/bin/vcprompt > ~/bin/vcprompt
+    $ chmod 755 ~/bin/vcprompt
+</pre>
 
-<p>Download vcprompt, make it executable and add it to your prompt:</p>
-
-<pre><code>$ curl -sL https://github.com/djl/vcprompt/raw/master/bin/vcprompt &gt; ~/bin/vcprompt
-$ chmod 755 ~/bin/vcprompt
-$ export PS1="$(vcprompt) $PS1"</code></pre>
-
-<p>ZSH users should be aware that they will have to set the
-<code>PROMPT_SUBST</code> option first:</p>
-
-<pre><code>$ setopt PROMPT_SUBST
-</code></pre>
 
 <h2>OPTIONS</h2>
+<pre>
+    -f, --format=FORMAT
+          The format string to use when displaying information.
 
-<ul>
-<li><p><code>-f, --format FORMAT</code></p>
+          If not provided this will fall  back  onto  the  VCPROMPT_FORMAT
+          environment  variable  or  the  hard-coded  string inside of the
+          vprompt binary.
 
-<p>Passes a custom output format to <code>vcprompt</code>. Defaults to <code>%s:%b</code>.
-See below for more details.</p></li>
-<li><p><code>-p, --path PATH</code></p>
+    --format-SYSTEM=FORMAT
+          The format string to be used for a specific version control sys-
+          tem.  If  a  system's formatting is not explicitly specified, it
+          will automatically fall back onto  the  value  of  the  --format
+          flag.
 
-<p>The path on which to run <code>vcprompt</code>. Defaults to the current
-directory.</p></li>
-<li><p><code>-d, --max-depth</code></p>
+    -p, --path=PATH
+          The  path to for vcprompt to start looking for a version control
+          repository.
 
-<p>The maximum number of directories <code>vcprompt</code> should traverse while
-looking for version control systems.</p></li>
-<li><p><code>-s, --systems</code></p>
+          Defaults to '.'.
 
-<p>Prints all available version control systems to standard out.</p></li>
-<li><p><code>-h, --help</code></p>
+    -u, --unknown=UNKNOWN
+          The value to use when vcprompt is unable to determine the appro-
+          priate output for a formatting option.
 
-<p>Prints the help message and exists.</p></li>
-<li><p><code>-v, --version</code></p>
+          If not provided will fall back onto the VCPROMPT_UNKNOWN envi-
+          ronment variable or the hard-coded string inside of the vcprompt
+          binary.
 
-<p>Prints the current version number and exits.</p></li>
-</ul>
+    -d, --max-depth=DEPTH
+          The maximum number of directories  vcprompt will traverse in
+          order to find a version control system.
 
-<p>Each version control system also has it's own formatting option.
-The options take the form of <code>--format-SYSTEM</code>.
-The available options are currently:</p>
+          A non-positive number indicates an infinite depth.
 
-<ul>
-<li><code>--format-bzr</code></li>
-<li><code>--format-cvs</code></li>
-<li><code>--format-darcs</code></li>
-<li><code>--format-fossil</code></li>
-<li><code>--format-git</code></li>
-<li><code>--format-hg</code></li>
-<li><code>--format-svn</code></li>
-</ul>
+          Defaults to 0 (no limit).
 
-<h2>FORMATS</h2>
+    -s, --systems=SYSTEMS
+          Prints all known version control systems.
+</pre>
 
-<p><code>vcprompt</code> comes with a number of formatting tokens. What follows is a list
-of all the available tokens:</p>
+<h2>ENVIRONMENT</h2>
+<pre>
+    VCPROMPT_FORMAT
+        The format string which vcprompt will use when displaying any
+        information.
 
-<ul>
-<li><p><code>%s</code> or <code>%n</code></p>
+    VCPROMPT_FORMAT_<em>SYSTEM</em>
+        Each version control system's formatting can be specified via
+        it's own environment variable.
 
-<p>The "short name" of the version control system currently in
-use. E.g. <code>git</code>, <code>hg</code>, <code>svn</code></p></li>
-<li><p><code>%h</code></p>
+    VCPROMPT_UNKNOWN
+        The value to be used when vcprompt is unable to determine the
+        output for a formatting option.
 
-<p>The hash of the repository. If no hash is available it will show the
-revision number instead.</p></li>
-<li><p><code>%r</code></p>
+    VCPROMPT_DEPTH
+        The maximum number of directories vcprompt should traverse
+        when looking for a usable version control system.
+</pre>
 
-<p>The revision number of the repository. If no revision number is
-available it will return the hash instead.</p></li>
-<li><p><code>%b</code></p>
-
-<p>The current branch. If branch is available it will be the directory
-where the version control system was first encountered.</p></li>
-<li><p><code>%m</code></p>
-
-<p>Displays a plus symbol (<code>+</code>) if the repository has any modified
-files.</p></li>
-<li><p><code>%u</code></p>
-
-<p>Displays an exclamtion mark (<code>!</code>) if there is any untracked files in
-the repository.</p></li>
-</ul>
-
-<h2>REQUIREMENTS</h2>
-
-<ul>
-<li><p>Python 2.4 or later. (Python >= 2.5 recommended).</p></li>
-<li><p>Python 3 isn't supported yet but 2to3 produces a tiny diff which
-seems to work.</p></li>
-<li><p>Fossil support requires the SQLite3 module to be installed (built in
-on Python 2.5+).</p></li>
-</ul>
-
-<h2>TESTING</h2>
-
-<p>To run the tests, use the provided Makefile:</p>
-
-<pre><code>make test
-</code></pre>
-
-<p>A few notes on testing:</p>
-
-<ul>
-<li>Tests have to fetch remote repositories, so network access is required</li>
-<li>Fetching remote repositories requires each VCS to be installed</li>
-</ul>
-
-<h2>NOTES</h2>
-
-<p>vcprompt was heavily inspired by Greg Ward's original
-<a href="http://vc.gerg.ca/hg/vcprompt/">implementation</a> in C.</p>
-
-<p>This version of vcprompt attempts to stay mostly compatible with the
-original although there may be some notable differences.</p>
+<h2>SEE ALSO</h2>
+<pre>
+    <a href="https://github.com/djl/vcprompt">https://github.com/djl/vcprompt</a>
+</pre>
 </body>
 </html>
