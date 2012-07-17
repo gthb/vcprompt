@@ -106,6 +106,14 @@ of all the available tokens:
   Displays an exclamtion mark (`!`) if there is any untracked files in
   the repository.
 
+* `%P`
+
+  The name of the repository root directory (typically a project name).
+
+* `%p`
+
+  The relative path from the repository root directory to the current
+  directory (or the directory specified by `--path`).
 
 
 REQUIREMENTS

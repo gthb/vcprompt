@@ -124,6 +124,7 @@ def vcprompt(options):
 
     """
     options.path = os.path.abspath(os.path.expanduser(options.path))
+    original_path = options.path
     prompt = None
     count = 0
 
@@ -152,6 +153,9 @@ def vcprompt(options):
 
             prompt = vcs(options)
             if prompt is not None:
+                prompt = prompt.replace("%P", os.path.basename(options.path))
+                prompt = prompt.replace("%p", os.path.relpath(original_path,
+                                                              options.path))
                 return prompt
 
         if options.depth:
